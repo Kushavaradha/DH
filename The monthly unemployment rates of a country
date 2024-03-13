@@ -1,0 +1,41 @@
+# Load necessary libraries
+library(ggplot2)
+
+# Create the dataset
+data <- data.frame(
+  Month = c('Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'July', 'August', 'Sep', 'Oct', 'Nov', 'Dec'),
+  Economic_Condition = c('Good', 'Good', 'Good', 'Good', 'Fair', 'Fair', 'Good', 'Bad', 'Fair', 'Good', 'Bad', 'Fair'),
+  Unemployment_Rate = c(10.7, 9.8, 10.2, 11.2, 15.75, 17.8, 19.4, 25.6, 18.6, 15.6, 26.7, 19.5)
+)
+
+# Convert economic condition to factors for better ordering
+data$Economic_Condition <- factor(data$Economic_Condition, levels = c('Good', 'Fair', 'Bad'))
+
+# Stacked bar plot
+ggplot(data, aes(x = Month, y = Unemployment_Rate, fill = Economic_Condition)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Unemployment Rates by Month and Economic Condition",
+       x = "Month",
+       y = "Unemployment Rate (%)",
+       fill = "Economic Condition") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_manual(values = c("Good" = "green", "Fair" = "orange", "Bad" = "red")) +
+  theme_minimal()
+
+# Pie plot
+ggplot(data, aes(x = "", y = Unemployment_Rate, fill = Month)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y") +
+  labs(title = "Unemployment Rates by Month",
+       fill = "Month") +
+  theme_void()
+
+# Grouped bar plot
+ggplot(data, aes(x = Month, y = Unemployment_Rate, fill = Economic_Condition)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Unemployment Rates by Month and Economic Condition",
+       x = "Month",
+       y = "Unemployment Rate (%)",
+       fill = "Economic Condition") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_minimal()
